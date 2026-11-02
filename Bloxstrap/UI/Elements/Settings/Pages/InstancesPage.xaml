@@ -1,0 +1,71 @@
+<ui:UiPage x:Class="Bloxstrap.UI.Elements.Settings.Pages.InstancesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:controls="clr-namespace:Bloxstrap.UI.Elements.Controls"
+      xmlns:models="clr-namespace:Bloxstrap.UI.ViewModels.Settings"
+      d:DataContext="{d:DesignInstance Type=models:InstancesViewModel}"
+      mc:Ignorable="d"
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="InstancesPage"
+      Scrollable="True">
+
+    <StackPanel Margin="0,0,14,14">
+        <TextBlock Margin="0,0,0,4" Text="Running instances" FontSize="18" FontWeight="SemiBold" />
+        <TextBlock Margin="0,0,0,8" TextWrapping="Wrap"
+                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                   Text="Every Roblox Player and Studio process Ultrastrap can see. Close, focus, or tile them without hunting through the taskbar." />
+
+        <TextBlock Margin="0,0,0,12" FontWeight="Medium" Text="{Binding InstanceCountLabel, Mode=OneWay}" />
+
+        <controls:OptionControl
+            Header="Keep the multi-instance watcher running"
+            Description="Holds the Roblox singleton mutexes even after the last client closes, so the next extra window opens immediately.">
+            <ui:ToggleSwitch IsChecked="{Binding PersistMutexWatcher, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <ListBox Margin="0,12,0,8" MinHeight="160" MaxHeight="280"
+                 ItemsSource="{Binding Instances}"
+                 SelectedItem="{Binding SelectedInstance, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="2">
+                        <TextBlock Text="{Binding DisplayLabel}" />
+                        <TextBlock FontSize="11" Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                            <Run Text="Started" />
+                            <Run Text="{Binding StartedLabel, Mode=OneWay}" />
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <WrapPanel Margin="0,0,0,12">
+            <ui:Button Margin="0,0,8,8" Content="Refresh" Icon="ArrowClockwise24"
+                       Command="{Binding RefreshCommand, Mode=OneTime}" />
+            <ui:Button Margin="0,0,8,8" Content="Focus" Icon="Window24"
+                       IsEnabled="{Binding IsInstanceSelected}"
+                       Command="{Binding FocusCommand, Mode=OneTime}" />
+            <ui:Button Margin="0,0,8,8" Content="Close selected" Icon="Dismiss24"
+                       IsEnabled="{Binding IsInstanceSelected}"
+                       Command="{Binding CloseSelectedCommand, Mode=OneTime}" />
+            <ui:Button Margin="0,0,8,8" Content="Close all" Icon="DismissCircle24" Appearance="Danger"
+                       Command="{Binding CloseAllCommand, Mode=OneTime}" />
+        </WrapPanel>
+
+        <TextBlock Margin="0,0,0,8" Text="Arrange windows" FontWeight="Medium" />
+        <WrapPanel Margin="0,0,0,12">
+            <ui:Button Margin="0,0,8,8" Content="Tile grid" Icon="Grid24"
+                       Command="{Binding TileGridCommand, Mode=OneTime}" />
+            <ui:Button Margin="0,0,8,8" Content="Tile horizontal" Icon="PanelLeft24"
+                       Command="{Binding TileHorizontalCommand, Mode=OneTime}" />
+            <ui:Button Margin="0,0,8,8" Content="Tile vertical" Icon="ArrowUp24"
+                       Command="{Binding TileVerticalCommand, Mode=OneTime}" />
+        </WrapPanel>
+
+        <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                   Text="{Binding StatusMessage, Mode=OneWay}" />
+    </StackPanel>
+</ui:UiPage>

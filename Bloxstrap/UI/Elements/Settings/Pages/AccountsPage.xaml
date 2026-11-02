@@ -1,0 +1,97 @@
+<ui:UiPage x:Class="Bloxstrap.UI.Elements.Settings.Pages.AccountsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:local="clr-namespace:Bloxstrap.UI.Elements.Settings.Pages"
+      xmlns:controls="clr-namespace:Bloxstrap.UI.Elements.Controls"
+      xmlns:models="clr-namespace:Bloxstrap.UI.ViewModels.Settings"
+      d:DataContext="{d:DesignInstance Type=models:AccountsViewModel}"
+      mc:Ignorable="d"
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="AccountsPage"
+      Scrollable="True">
+
+    <StackPanel Margin="0,0,14,14">
+        <TextBlock Margin="0,0,0,4" Text="Account Manager" FontSize="18" FontWeight="SemiBold" />
+        <TextBlock Margin="0,0,0,12" TextWrapping="Wrap"
+                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                   Text="Add Roblox accounts by their .ROBLOSECURITY cookie. The active account's fresh authentication ticket is injected into game launches, so with multiple instances enabled you can play several accounts at once. Cookies are stored encrypted for your Windows user only." />
+
+        <ui:CardControl Margin="0,0,0,12" Icon="PersonAdd24">
+            <ui:CardControl.Header>
+                <StackPanel>
+                    <TextBlock Text="Add an account" FontWeight="Medium" />
+                    <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" FontSize="12"
+                               Text="Paste the .ROBLOSECURITY cookie value (or the whole cookie header)." />
+                </StackPanel>
+            </ui:CardControl.Header>
+        </ui:CardControl>
+
+        <TextBlock Margin="0,0,0,4" Text="Alias (optional)" />
+        <ui:TextBox Margin="0,0,0,8" PlaceholderText="Defaults to the Roblox username"
+                    Text="{Binding NewAlias, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock Margin="0,0,0,4" Text=".ROBLOSECURITY cookie" />
+        <ui:TextBox Margin="0,0,0,8" PlaceholderText="_|WARNING:-DO-NOT-SHARE-THIS...."
+                    Text="{Binding NewCookie, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <ui:Button Margin="0,0,0,16" Content="Add account" Icon="Add24" Appearance="Primary"
+                   IsEnabled="{Binding NotBusy}"
+                   Command="{Binding AddAccountCommand, Mode=OneTime}" />
+
+        <TextBlock Margin="0,0,0,4" Text="Saved accounts" FontWeight="Medium" />
+        <TextBlock Margin="0,0,0,4" FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+            <Run Text="Active account for launches:" />
+            <Run Text="{Binding ActiveAccountAlias, Mode=OneWay}" FontWeight="SemiBold" />
+        </TextBlock>
+
+        <ListBox Margin="0,0,0,8" MinHeight="120" MaxHeight="220"
+                 ItemsSource="{Binding Accounts}"
+                 SelectedItem="{Binding SelectedAccount, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="2">
+                        <TextBlock Text="{Binding DisplayLabel}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <WrapPanel Margin="0,0,0,12">
+            <ui:Button Margin="0,0,8,8" Content="Use for launches" Icon="Checkmark24"
+                       IsEnabled="{Binding IsAccountSelected}"
+                       Command="{Binding SetActiveCommand, Mode=OneTime}" />
+            <ui:Button Margin="0,0,8,8" Content="Clear active" Icon="Dismiss24"
+                       Command="{Binding ClearActiveCommand, Mode=OneTime}" />
+            <ui:Button Margin="0,0,8,8" Content="Refresh" Icon="ArrowClockwise24"
+                       IsEnabled="{Binding IsAccountSelected}"
+                       Command="{Binding RefreshCommand, Mode=OneTime}" />
+            <ui:Button Margin="0,0,8,8" Content="Copy auth ticket" Icon="Copy24"
+                       IsEnabled="{Binding IsAccountSelected}"
+                       Command="{Binding CopyTicketCommand, Mode=OneTime}" />
+            <ui:Button Margin="0,0,8,8" Content="Remove" Icon="Delete24" Appearance="Danger"
+                       IsEnabled="{Binding IsAccountSelected}"
+                       Command="{Binding RemoveAccountCommand, Mode=OneTime}" />
+        </WrapPanel>
+
+        <TextBlock Margin="0,4,0,4" Text="Launch this account" FontWeight="Medium" />
+        <TextBlock Margin="0,0,0,8" FontSize="12" TextWrapping="Wrap"
+                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                   Text="Opens a Roblox window as the selected account. Combined with multi-instancing you can then launch other accounts into the same (or a different) place." />
+        <ui:TextBox Margin="0,0,0,8" PlaceholderText="Place ID or roblox.com/games/... URL"
+                    Text="{Binding LaunchPlaceInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <WrapPanel Margin="0,0,0,12">
+            <ui:Button Margin="0,0,8,8" Content="Launch selected account" Icon="Play24" Appearance="Primary"
+                       IsEnabled="{Binding CanLaunchSelected}"
+                       Command="{Binding LaunchSelectedAccountCommand, Mode=OneTime}" />
+            <ui:Button Margin="0,0,8,8" Content="Launch all accounts" Icon="PeopleTeam24"
+                       IsEnabled="{Binding NotBusy}"
+                       Command="{Binding LaunchAllAccountsCommand, Mode=OneTime}" />
+        </WrapPanel>
+
+        <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                   Text="{Binding StatusMessage, Mode=OneWay}" />
+    </StackPanel>
+</ui:UiPage>
