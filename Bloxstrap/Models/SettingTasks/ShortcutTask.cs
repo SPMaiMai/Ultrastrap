@@ -16,7 +16,7 @@
             if (alsoStartMenu)
                 _startMenuPath = Path.Combine(Paths.WindowsStartMenuRoot, lnkName);
 
-            OriginalState = File.Exists(_shortcutPath) || (_startMenuPath is not null && File.Exists(_startMenuPath));
+            OriginalState = File.Exists(_shortcutPath);
         }
 
         public override void Execute()

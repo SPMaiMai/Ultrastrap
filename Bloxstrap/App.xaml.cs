@@ -20,10 +20,10 @@ namespace Bloxstrap
 #endif
         // Ultrastrap is a feature-expanded fork of Bloxstrap (https://github.com/bloxstraplabs/bloxstrap)
         public const string ProjectOwner = "Ultrastrap";
-        public const string ProjectRepository = "ultrastrap/ultrastrap";
-        public const string ProjectDownloadLink = "https://github.com/ultrastrap/ultrastrap/releases";
-        public const string ProjectHelpLink = "https://github.com/ultrastrap/ultrastrap/wiki";
-        public const string ProjectSupportLink = "https://github.com/ultrastrap/ultrastrap/issues/new";
+        public const string ProjectRepository = "SPMaiMai/Ultrastrap";
+        public const string ProjectDownloadLink = "https://github.com/SPMaiMai/Ultrastrap/releases";
+        public const string ProjectHelpLink = "https://github.com/SPMaiMai/Ultrastrap/wiki";
+        public const string ProjectSupportLink = "https://github.com/SPMaiMai/Ultrastrap/issues/new";
 
         // upstream project this fork is based on, used for update checks of the Roblox-facing bits
         public const string UpstreamRepository = "bloxstraplabs/bloxstrap";
@@ -400,8 +400,6 @@ namespace Bloxstrap
 
                 if (!LaunchSettings.BypassUpdateCheck)
                     Installer.HandleUpgrade();
-
-                Installer.EnsureSearchableShortcuts();
 
                 if (Settings.Prop.MultiInstanceLaunching && Settings.Prop.PersistMutexWatcher
                     && !LaunchSettings.MultiInstanceWatcherFlag.Active)

@@ -115,18 +115,6 @@ namespace Bloxstrap
         public static void CreateStartMenuShortcutsForInstall()
         {
             Shortcut.Create(Paths.Application, "", StartMenuShortcut, App.ProjectName);
-            Shortcut.Create(Paths.Application, "-player", Path.Combine(Paths.WindowsStartMenuRoot, $"{Strings.LaunchMenu_LaunchRoblox}.lnk"), Strings.LaunchMenu_LaunchRoblox);
-            Shortcut.Create(Paths.Application, "-settings", Path.Combine(Paths.WindowsStartMenuRoot, $"{Strings.Menu_Title}.lnk"), Strings.Menu_Title);
-
-            if (App.IsStudioInstalled)
-                Shortcut.Create(Paths.Application, "-studio", Path.Combine(Paths.WindowsStartMenuRoot, $"{Strings.LaunchMenu_LaunchRobloxStudio}.lnk"), Strings.LaunchMenu_LaunchRobloxStudio);
-        }
-
-        public static void EnsureSearchableShortcuts()
-        {
-            string playerShortcut = Path.Combine(Paths.WindowsStartMenuRoot, $"{Strings.LaunchMenu_LaunchRoblox}.lnk");
-            if (!File.Exists(playerShortcut))
-                CreateStartMenuShortcutsForInstall();
         }
 
         /// <summary>

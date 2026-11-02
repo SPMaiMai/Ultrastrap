@@ -82,17 +82,14 @@ Ultrastrap.exe "roblox-player:1+..." -account "alt"
 The Roblox URI, if present, must come first.
 
 ## Building
-Ultrastrap targets `net6.0-windows` (WPF + WinForms). With the .NET 6 SDK (or newer) installed:
+Ultrastrap targets `net6.0-windows` (WPF + WinForms). With a recent .NET SDK installed:
 
 ```sh
+git submodule update --init --recursive
 dotnet build Bloxstrap.sln -c Release
 ```
 
-The output binary is `Ultrastrap.exe`. To make a shareable installer (single file):
-
-```sh
-dotnet publish Bloxstrap\Bloxstrap.csproj -p:PublishSingleFile=true -r win-x64 -c Release --self-contained false
-```
+The output binary is `Ultrastrap.exe`.
 
 ## Security note
 Your `.ROBLOSECURITY` cookie is equivalent to your password. Ultrastrap encrypts stored cookies with DPAPI so they can only be read by your Windows user account on this machine. Only add accounts you own, and never share your cookies or generated authentication tickets.
