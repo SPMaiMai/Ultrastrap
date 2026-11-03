@@ -81,8 +81,8 @@ Ultrastrap.exe "roblox-player:1+..." -account "alt"
 
 The Roblox URI, if present, must come first.
 
-## Building
-Ultrastrap targets `net6.0-windows` (WPF + WinForms). With a recent .NET SDK installed:
+## Building (Windows)
+Ultrastrap for Windows targets `net6.0-windows` (WPF + WinForms). With a recent .NET SDK installed:
 
 ```sh
 git submodule update --init --recursive
@@ -91,8 +91,22 @@ dotnet build Bloxstrap.sln -c Release
 
 The output binary is `Ultrastrap.exe`.
 
+## Mac version
+The Windows app cannot run on macOS. `Mac/` is a native SwiftUI rewrite with the Ultrastrap launch menu, multi-window launch, account manager (Keychain), Fast Flags, and instance dashboard.
+
+On a Mac with Xcode or the Command Line Tools:
+
+```sh
+cd Mac
+chmod +x build-mac.sh
+./build-mac.sh
+open dist/Ultrastrap.app
+```
+
+See `Mac/README.md` for paths, Gatekeeper notes, and feature details.
+
 ## Security note
-Your `.ROBLOSECURITY` cookie is equivalent to your password. Ultrastrap encrypts stored cookies with DPAPI so they can only be read by your Windows user account on this machine. Only add accounts you own, and never share your cookies or generated authentication tickets.
+Your `.ROBLOSECURITY` cookie is equivalent to your password. On Windows, Ultrastrap encrypts stored cookies with DPAPI so they can only be read by your Windows user account on this machine. On Mac, cookies are stored in the Keychain for your macOS user only. Only add accounts you own, and never share your cookies or generated authentication tickets.
 
 ## Credits
 - [Bloxstrap](https://github.com/bloxstraplabs/bloxstrap) and its contributors for the original bootstrapper this fork is built on.
